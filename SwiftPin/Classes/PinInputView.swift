@@ -61,9 +61,11 @@ class PinInputView: UIStackView {
 
             let stack = UIStackView(arrangedSubviews: $0.map {
                 let button = createButton(from: $0)
+                button.layer.masksToBounds = true
+                button.layer.cornerRadius = button.frame.size.height / 2.0
                 buttonConstraints.append(contentsOf: [
                     button.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightMultiplier),
-                    button.widthAnchor.constraint(equalTo: widthAnchor, multiplier: widthMultiplier)
+                    button.widthAnchor.constraint(equalTo: heightAnchor, multiplier: heightMultiplier)
                 ])
                 return button
             })
