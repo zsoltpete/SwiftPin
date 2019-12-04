@@ -14,7 +14,7 @@ public protocol PinInputDelegate: class {
 public struct PinInputViewConfiguration {
     
     let layout: [[Key]]
-    let buttonStyleClosure: ((UIButton, Key) -> Void)?
+    let buttonStyleClosure: ((KeyboardButton, Key) -> Void)?
     
     public static var standard: PinInputViewConfiguration {
         return PinInputViewConfiguration(layout: [[.one, .two, .three],
@@ -24,7 +24,7 @@ public struct PinInputViewConfiguration {
                              buttonStyleClosure: nil)
     }
     
-    public init(layout: [[Key]], buttonStyleClosure: ((UIButton, Key) -> Void)?) {
+    public init(layout: [[Key]], buttonStyleClosure: ((KeyboardButton, Key) -> Void)?) {
         self.layout = layout
         self.buttonStyleClosure = buttonStyleClosure
     }
@@ -118,8 +118,8 @@ class PinInputView: UIStackView {
     ///
     /// - Parameter keyPadItem: keypad item
     /// - Returns: buttom representing keypad item
-    private func createButton(from key: Key) -> UIButton {
-        let button = UIButton(type: .custom)
+    private func createButton(from key: Key) -> KeyboardButton {
+        let button = KeyboardButton(type: .custom)
         button.addTarget(self, action: #selector(digitPressed), for: .touchUpInside)
         button.tag = key.identifier
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -147,7 +147,7 @@ class PinInputView: UIStackView {
     /// Digit Pressed
     ///
     /// - Parameter item: the button that was pressed
-    @objc func digitPressed(_ item: UIButton) {
+    @objc func digitPressed(_ item: KeyboardButton) {
         let key = Key.from(value: item.tag)
         delegate?.itemSelected(key)
     }
